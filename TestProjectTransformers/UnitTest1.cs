@@ -1,3 +1,5 @@
+using Project_A_OOP_2023;
+
 namespace TestProjectTransformers
 {
     [TestClass]
@@ -50,11 +52,62 @@ namespace TestProjectTransformers
         {
             var winner = new Autobot("ID126", "Optimus Prime", "Leader");
             var loser = new Decepticon("ID127", "Starscream", "Air Commander");
-            var battleHistory = new BattleHistory(DateTime.Now, "Victory for Autobots");
+            var battleHistory = new BattleHistory(DateTime.Now, "Optimus Prime defeats Starscream");
 
-            battleHistory.RecordBattle(winner, loser); //Цей метод зараз не реалізований, отже тест Failed
+            battleHistory.RecordBattle(winner, loser);
 
-            Assert.AreEqual("Victory for Autobots", battleHistory.outcome);
+            Assert.AreEqual("Victory for Optimus Prime under Starscream", battleHistory.outcome);
+        }
+
+        [TestMethod]
+        public void Autobot_TransformsToCar_Correctly()
+        {
+            var autobot = new Autobot("ID124", "Bumblebee", "Scout");
+            autobot.Transform(); // Передбачається, що цей метод змінює стан на Car
+
+            Assert.AreEqual(TransformedObject.Car, autobot.TransformedInto);
+        }
+
+        [TestMethod]
+        public void Decepticon_TransformsToPlane_Correctly()
+        {
+            var decepticon = new Decepticon("ID125", "Starscream", "Air Command");
+            decepticon.Transform(); // Передбачається, що цей метод змінює стан на Plane
+
+            Assert.AreEqual(TransformedObject.Plane, decepticon.TransformedInto);
+        }
+
+        // Цей тест перевіряє, що метод Transform() автобота перемикає стан з Original на Car і назад
+        [TestMethod]
+        public void Autobot_TransformTogglesBetweenOriginalAndCar()
+        {
+            var autobot = new Autobot("ID124", "Bumblebee", "Scout");
+            autobot.Transform(); // Перевірка першої трансформації
+            Assert.AreEqual(TransformedObject.Car, autobot.TransformedInto);
+
+            autobot.Transform(); // Перевірка повернення до оригінального стану
+            Assert.AreEqual(TransformedObject.Original, autobot.TransformedInto);
+        }
+
+        // Цей тест перевіряє, що метод Transform() десептикона перемикає стан з Original на Plane і назад
+        [TestMethod]
+        public void Decepticon_TransformTogglesBetweenOriginalAndPlane()
+        {
+            var decepticon = new Decepticon("ID125", "Starscream", "Air Command");
+            decepticon.Transform(); // Перевірка першої трансформації
+            Assert.AreEqual(TransformedObject.Plane, decepticon.TransformedInto);
+
+            decepticon.Transform(); // Перевірка повернення до оригінального стану
+            Assert.AreEqual(TransformedObject.Original, decepticon.TransformedInto);
+        }
+
+        [TestMethod]
+        public void Transformer_DefaultTransformationIsOriginal()
+        {
+            var transformer = new Transformer("ID123", "Generic");
+            // Передбачається, що за замовчуванням трансформер не трансформований
+
+            Assert.AreEqual(TransformedObject.Original, transformer.TransformedInto);
         }
     }
 }
