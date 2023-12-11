@@ -10,7 +10,7 @@ namespace Project_A_OOP_2023
     {
         TransformedObject TransformedInto { get; set; }
 
-        void Transform();
+        void Transform(TransformedObject transformedObject = TransformedObject.Original);
     }
 
     public enum TransformedObject
@@ -46,9 +46,9 @@ namespace Project_A_OOP_2023
             this.weapon = new Weapon(weapon);
         }
 
-        public virtual void Transform()
+        public virtual void Transform(TransformedObject transformedObject = TransformedObject.Car)
         {
-            this.TransformedInto = (TransformedObject)1;
+            this.TransformedInto = transformedObject;
         }
 
         public object Clone()

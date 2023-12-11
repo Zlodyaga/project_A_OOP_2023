@@ -2,11 +2,20 @@
 
 class Program
 {
+    delegate void Clear();
+    delegate void Display();
+    static event Display displayTransformers;
+    static event Action displayTransformersDetailed;
+
     static List<Transformer> transformers = new List<Transformer>();
+    static BattleHistory battleHistory = new BattleHistory();
 
     static void Main(string[] args)
     {
         //Стартові дані
+        Clear clear = Console.Clear; 
+        displayTransformers += DisplayTransformers;
+        displayTransformersDetailed += DisplayTransformersDetailed;
         transformers.Add(new Autobot("121", "Optimus Prime", "Leader"));
         transformers.Add(new Autobot("122", "Bumblebee", "Scout"));
         transformers.Add(new Decepticon("123", "Starscream", "Air Commander"));
@@ -22,29 +31,24 @@ class Program
             Console.Write("Select an option: ");
 
             var option = Console.ReadLine();
-
+            clear();
             switch (option)
             {
                 case "1":
-                    Console.Clear();
                     AddTransformer();
                     break;
                 case "2":
-                    Console.Clear();
-                    DisplayTransformers();
+                    displayTransformers();
                     TransformTransformer();
                     break;
                 case "3":
-                    Console.Clear();
-                    DisplayTransformersDetailed();
+                    displayTransformersDetailed();
                     break;
                 case "4":
-                    Console.Clear();
-                    DisplayTransformers();
+                    displayTransformers();
                     RecordBattle();
                     break;
                 case "5":
-                    Console.Clear();
                     return;
                 default:
                     Console.WriteLine("Invalid option, please try again.");
@@ -126,8 +130,8 @@ class Program
 
         if (winner != null && loser != null)
         {
-            var battleHistory = new BattleHistory(DateTime.Now, $"Victory for {winner.name} over {loser.name}");
-            Console.WriteLine(battleHistory.outcome);
+            battleHistory.RecordBattle(winner, loser);
+            battleHistory.DisplayBattleHistory();
         }
         else
         {

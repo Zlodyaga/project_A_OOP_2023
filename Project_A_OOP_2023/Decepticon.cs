@@ -9,11 +9,11 @@
             this.evilPurpose = purpose;
         }
 
-        public override void Transform()
+        public override void Transform(TransformedObject transformedObject = TransformedObject.Plane)
         {
             if (TransformedInto == (TransformedObject)0)
             {
-                this.TransformedInto = (TransformedObject)2;
+                this.TransformedInto = transformedObject;
             }
             else
             {

@@ -9,11 +9,11 @@
             this.specialization = spec;
         }
 
-        public override void Transform()
+        public override void Transform(TransformedObject transformedObject = TransformedObject.Car)
         {
             if (TransformedInto == (TransformedObject)0)
             {
-                this.TransformedInto = (TransformedObject)1;
+                this.TransformedInto = transformedObject;
             }
             else
             {

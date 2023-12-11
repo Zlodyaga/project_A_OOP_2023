@@ -52,11 +52,11 @@ namespace TestProjectTransformers
         {
             var winner = new Autobot("ID126", "Optimus Prime", "Leader");
             var loser = new Decepticon("ID127", "Starscream", "Air Commander");
-            var battleHistory = new BattleHistory(DateTime.Now, "Optimus Prime defeats Starscream");
+            var battleHistory = new BattleHistory();
 
             battleHistory.RecordBattle(winner, loser);
 
-            Assert.AreEqual("Victory for Optimus Prime under Starscream", battleHistory.outcome);
+            Assert.AreEqual("Victory for Optimus Prime over Starscream", battleHistory.battles[0].Outcome);
         }
 
         [TestMethod]

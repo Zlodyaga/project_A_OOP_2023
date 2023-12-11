@@ -1,20 +1,46 @@
 ﻿namespace Project_A_OOP_2023
 {
+    using System;
+    using System.Collections.Generic;
+
+    public class BattleRecord
+    {
+        public DateTime Date { get; private set; }
+        public string Outcome { get; private set; }
+
+        public BattleRecord(DateTime date, string outcome)
+        {
+            Date = date;
+            Outcome = outcome;
+        }
+    }
+
     public class BattleHistory
     {
-        public DateTime date { get; private set; }
-        public string outcome { get; private set; }
+        public List<BattleRecord> battles = new List<BattleRecord>();
 
-        public BattleHistory(DateTime date, string outcome)
+        public BattleHistory()
+        { }
+
+        public BattleHistory(BattleRecord battle)
         {
-            this.date = date;
-            this.outcome = outcome;
+            battles.Add(battle);
         }
 
         public void RecordBattle(Transformer winner, Transformer loser)
         {
-            date = DateTime.Now;
-            outcome = $"Victory for {winner.name} under {loser.name}";
+            DateTime battleDate = DateTime.Now;
+            string outcome = $"Victory for {winner.name} over {loser.name}";
+            battles.Add(new BattleRecord(battleDate, outcome));
+        }
+
+        public void DisplayBattleHistory()
+        {
+            foreach (var battle in battles)
+            {
+                Console.WriteLine($"Date: {battle.Date}, Outcome: {battle.Outcome}");
+            }
         }
     }
+
 }
